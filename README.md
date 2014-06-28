@@ -2,4 +2,4 @@
 pypc
 ====
 
-Python Package Creator
+The Python3 Package Creator
