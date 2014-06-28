@@ -1,4 +1,4 @@
-[![Stories in Ready](https://badge.waffle.io/mekarpeles/gypy.png?label=ready)](https://waffle.io/mekarpeles/gypy)
+[![Stories in Ready](https://badge.waffle.io/mekarpeles/gypy.png?label=ready)](https://waffle.io/mekarpeles/pypc)
 pypc
 ====
 
