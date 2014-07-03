@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+#-*- coding: utf-8 -*-
+
+from pypc import pkg
+import argparse
+
+def argparser():
+   parser = argparse.ArgumentParser(descrition="Pypc, the Python3 Package Creator")
+   return parser
+                                    
+if __name__ == "__main__":
+   parser = argparser()
+   args = parser.parse_args()
