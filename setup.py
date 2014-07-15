@@ -35,13 +35,13 @@ import os
 
 setup(
     name='pypc',
-    version='0.1-dev',
+    version='0.1.1-dev',
     url='http://github.com/mekarpeles/pypc',
     author='hackerlist',
     author_email='m@hackerlist.net',
     packages=[
         'pypc',
-        'tests'
+        'pypc/tests'
         ],
     platforms='any',
     license='LICENSE',
