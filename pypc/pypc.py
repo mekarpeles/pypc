@@ -12,16 +12,7 @@
 """
 
 import os
-
-ROOT = {
-    'dirs': [
-        'docs', 'examples', '$/tests'
-        ],
-    'files': [
-        'AUTHORS', 'CHANGES', 'LICENSE', 'MANIFEST.in', 'README.md', 'setup.py',
-        'requirements.py', 'tox.in', '$/__init__.py', '$/tests/__init__.py'
-        ]
-    }
+from settings import DEPENDENCIES, ROOT, VERSION
 
 class Package(object):
 
