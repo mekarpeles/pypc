@@ -35,6 +35,18 @@ class Package(object):
         if not self.app:
             raise TypeError("Path <%s> must include a basename" % self.path)
 
+    def as_package(func):
+        """Decorator which preempts func by switching directories to
+        the Package's local context (venv) prior to execution and then
+        restores back to pypc's native context afterwards.
+        """
+        def switch_ctx(self, *args, **kwargs):
+            os.chdir(self.path)
+            ret = func(self, *args, **kwargs)
+            os.chdir(self._path)
+            return ret
+        return switch_ctx
+
     def new(self, **kwargs):
         """Generate a new package"""
         dirs =  [d.replace('$', self.app) for d in ROOT['dirs' ]]
