@@ -14,6 +14,19 @@
 import os
 from settings import DEPENDENCIES, ROOT, VERSION
 
+class Context(object):
+
+    def __init__(self, path, back=None):
+        self.back = back or os.getcwd()
+        self.forward = path
+
+    def __enter__(self):
+        os.chdir(self.forward)
+        return self
+        
+    def __exit__(self, type, value, traceback):
+        os.chdir(self.back)
+
 class Package(object):
 
     def __init__(self, path):
@@ -32,10 +45,8 @@ class Package(object):
         restores back to pypc's native context afterwards.
         """
         def switch_ctx(self, *args, **kwargs):
-            os.chdir(self.path)
-            ret = func(self, *args, **kwargs)
-            os.chdir(self._path)
-            return ret
+            with Context(self.path):
+                return func(self, *args, **kwargs)
         return switch_ctx
 
     def new(self, **kwargs):
