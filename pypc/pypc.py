@@ -40,7 +40,7 @@ class Package(object):
         self.path = path
         self.dirname, self.app = os.path.split(path)
         if not self.app:
-            raise TypeError("Path <%s> must include a basename" % self.path)
+            raise TypeError("Path '%s' must include a basename" % self.path)
 
     def as_package(func):
         """Decorator which preempts func by switching directories to
