@@ -1,7 +1,4 @@
-Jinja2==2.7.3
-MarkupSafe==0.23
 argparse==1.2.1
-ipython==2.1.0
 pep8==1.5.7
 pyflakes==0.8.1
 virtualenv==1.11.6
