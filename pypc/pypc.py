@@ -55,13 +55,13 @@ class Package(object):
         files = [f.replace('$', self.app) for f in ROOT['files']]
 
         for d in dirs:
-            try:
-                os.makedirs('%s/%s' % (self.path, d))
+            try:                
+                os.makedirs(os.path.join(self.path, d))
             except OSError:
                 print("Skipping <%s>: dir exists." % d)
 
         for f in files:
-            with open('%s/%s' % (self.path, f), 'wb') as t:
+            with open(os.path.join(self.path, f), 'wb') as t:
                 pass
 
 if __name__ == "__main__":
