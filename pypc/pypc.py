@@ -12,6 +12,9 @@
 """
 
 import os
+import pip
+import virtualenv
+from pkg_resources import WorkingSet, DistributionNotFound
 from settings import DEPENDENCIES, ROOT, VERSION
 
 class Context(object):
@@ -63,6 +66,16 @@ class Package(object):
         for f in files:
             with open(os.path.join(self.path, f), 'wb') as t:
                 pass
+
+    @as_package
+    def setup_virtualenv(self, name='venv'):
+        """Installs and configures Package virtual environment"""
+        try:
+            dist = WorkingSet().require('virtualenv')
+        except DistributionNotFound:            
+            pip.main(['install', 'virtualenv'])
+
+        virtualenv.create_environment(os.path.join(self.path, name))
 
 if __name__ == "__main__":
     pass

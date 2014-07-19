@@ -15,7 +15,7 @@ def argparser():
 def normalize_path(path):
     if os.sep in path:
         return path
-    return '%s/%s' % (os.getcwd(), path)
+    return os.path.join(os.getcwd(), path)
 
 if __name__ == "__main__":
     parser = argparser()
@@ -23,3 +23,4 @@ if __name__ == "__main__":
     path = normalize_path(args.path)    
     pkg = Package(path)
     pkg.new()
+    pkg.setup_virtualenv()
