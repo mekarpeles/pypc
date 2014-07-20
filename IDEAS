@@ -1,0 +1,9 @@
+0) Error handling to make sure Package().new() has been called
+1) Offline mode (does not install pip requirements)
+2) .hgignore or .gitignore
+3) merge with pip; pip create <package>
+4) have pypc <package> cd into <package> and source / activate virtualenv
+5) Find a way to activate virtualenv for the duration Package's life
+(until GC). This way we can (instead of using as_venv) run:
+- pip.main(['install'] v. as_venv('pip install <pkg>')
+- pip.get_installed_distributions() v. of as_venv('pip freeze')

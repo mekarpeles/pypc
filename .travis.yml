@@ -4,10 +4,15 @@ python:
   - "2.7"
   - "3.2"
   - "3.3"
+matrix:
+  allow_failures:
+    - python: "3.2"
+    - python: "3.3"
 # command to install dependencies
 install:
-  - pip install .
-  - pip install -r requirements.txt
-install: "pip install . --use-mirrors"
+  - pip install . --use-mirrors
 # command to run tests, e.g. python setup.py test
-script: nosetests
+script:
+  - nosetests
+  - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then flake8 pypc; fi
+cache: apt

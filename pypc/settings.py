@@ -8,8 +8,8 @@ ROOT = {
         'docs', 'examples', '$/tests'
         ],
     'files': [
-        'AUTHORS', 'CHANGES', 'LICENSE', 'MANIFEST.in', 'README.md', 'setup.py',
-        'tox.in', '$/__init__.py', '$/tests/__init__.py'
+        'AUTHORS', 'CHANGES', 'LICENSE', 'MANIFEST.in', 'README.md',
+        'setup.py', 'tox.in', '$/__init__.py', '$/tests/__init__.py'
         ]
     }
 VERSION = '0.10-dev'
