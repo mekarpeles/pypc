@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+#-*- coding: utf-8 -*-
+
+pypc "$@"
+cd $1
+. venv/bin/activate

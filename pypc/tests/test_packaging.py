@@ -13,7 +13,7 @@
 
 import os
 import unittest
-from pypc import Package
+from pypc.pypc import Package
 
 VALID_PATH = os.path.expanduser('~')
 
@@ -22,8 +22,9 @@ ERR = {
     'failed-instantiation': 'Package path incorrectly set'
 }
 
+
 class TestPackage(unittest.TestCase):
-    
+
     def test_creation(self):
         self.assertRaises(TypeError, Package, '', ERR['invalid-basename'])
         p = Package(VALID_PATH)
@@ -34,4 +35,3 @@ class TestPackage(unittest.TestCase):
         a tempfile directory path.
         """
         pass
-

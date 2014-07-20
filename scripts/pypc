@@ -3,11 +3,15 @@
 
 import os
 import argparse
-from pypc import Package
+from pypc.pypc import Package
 
 TITLE = "Pypc, the Python3 Package Creator"
 
 def argparser():
+    """
+    options:
+        o - offline (does not pip install dependencies)
+    """
     parser = argparse.ArgumentParser(description=TITLE)
     parser.add_argument(action="store", dest="path", help="Package full path")
     return parser
@@ -21,6 +25,7 @@ if __name__ == "__main__":
     parser = argparser()
     args = parser.parse_args()
     path = normalize_path(args.path)    
-    pkg = Package(path)
+    pkg = Package(path, venv='venv')
     pkg.new()
-    pkg.setup_virtualenv()
+    pkg.install_virtualenv()
+    pkg.install_requirements()
