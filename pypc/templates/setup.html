@@ -1,0 +1,30 @@
+
+from setuptools import setup
+import os
+
+setup(
+    name='{{ name }}',
+    version='{{ version }}',
+    
+    url='{{ url }}',
+    author='{{ author }}',
+    author_email='{{ email }}',
+    packages=[
+        ],
+    platforms='any',
+    license='LICENSE',
+    install_requires=[
+        {% for d, v in dependencies.items() %}
+        '{{ d }}': '{{ v }}',
+        {% endfor %}        
+    ],
+    scripts=[
+        ],
+    classifiers=[
+    {% for c in classifiers %}
+        '{{ c }}',
+    {% endfor %}
+        ],
+    description={{ desc }},
+    long_description=open(os.path.join(os.path.dirname(__file__), 'README.md')).read(),
+)

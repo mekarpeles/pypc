@@ -3,6 +3,13 @@ Pypc Changelog
 
 Here you can see the full list of changes between each Pypc release.
 
+Version 0.1.3
+-------------
+
+- Generates setup.py
+- Code is much cleaner, code builds recursively
+- Added html template files
+
 Version 0.1.2
 -------------
 

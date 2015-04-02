@@ -2,18 +2,28 @@
 #-*- coding: utf-8 -*-
 
 import os
+import ntpath
 import argparse
 from pypc.pypc import Package
-
-TITLE = "Pypc, the Python3 Package Creator"
+from pypc import __title__
 
 def argparser():
     """
     options:
         o - offline (does not pip install dependencies)
     """
-    parser = argparse.ArgumentParser(description=TITLE)
-    parser.add_argument(action="store", dest="path", help="Package full path")
+    parser = argparse.ArgumentParser(description=__title__)
+    parser.add_argument(dest="path", help="Package full path")
+    parser.add_argument('--author', dest="author", help="Author's name",
+                        default='')
+    parser.add_argument('--email', dest="email", help="Author's email",
+                        default='')
+    parser.add_argument('--version', dest="version", help="Package version",
+                        default='0.0.1')
+    parser.add_argument('--desc', dest="desc", help="Package desc",
+                        default='no description available')
+    parser.add_argument('--url', dest="url", help="Package url",
+                        default='')
     return parser
 
 def normalize_path(path):
@@ -24,8 +34,19 @@ def normalize_path(path):
 if __name__ == "__main__":
     parser = argparser()
     args = parser.parse_args()
-    path = normalize_path(args.path)    
-    pkg = Package(path, venv='venv')
+
+    options = {
+        'path': normalize_path(args.path),
+        'pkgname' : ntpath.split(args.path)[-1],
+        'author': args.author,
+        'email': args.email,
+        'version': args.version,
+        'classifiers': [], #todo
+        'url': args.url,
+        'desc': args.desc,
+        'venv': 'venv'
+        }
+    pkg = Package(**options)
     pkg.new()
     pkg.install_virtualenv()
     pkg.install_requirements()

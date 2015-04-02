@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 
 """
     pypc
@@ -8,15 +8,15 @@
     This module creates new pypc packages
 
     :copyright: (c) 2014 by Hackerlist.
-    :license: BSD, see LICENSE for more details.
+    :license: Apache, see LICENSE for more details.
 """
 
 import os
 import pip
 import virtualenv
 import subprocess
-from settings import DEPENDENCIES, ROOT
-
+from pkg_resources import WorkingSet, DistributionNotFound
+from .settings import DEFAULTS, header
 
 class Context(object):
     """Switches a scope's context so that it's temporarily run within
@@ -47,16 +47,19 @@ class Package(object):
     python packages (across multiple python versions)
     """
 
-    def __init__(self, path, venv='venv'):
+    def __init__(self, path, **options):
         """
         >>> Package('/home/mek/pythagorean')
         >>> Package('pythagorean')
         """
-        self.venv = venv
+        self.dirname, self.pkgname = os.path.split(path)
         self.path = path
-        self.dirname, self.app = os.path.split(path)
-        if not self.app:
+        if not self.pkgname:
             raise TypeError("Path '%s' must include a basename" % self.path)
+
+        for k in DEFAULTS.keys():
+            if not hasattr(self, k):
+                setattr(self, k, options.get(k, DEFAULTS[k]))
 
     def as_package(func):
         """Decorator which preempts func by switching directories to
@@ -71,22 +74,33 @@ class Package(object):
                 return func(self, *args, **kwargs)
         return switch_ctx
 
-    def new(self, **kwargs):
-        """Generates a new package, creates the directory hierarchy"""
-        dirs = [d.replace('$', self.app) for d in ROOT['dirs']] + \
-            kwargs.get('dirs', [])
-        files = [f.replace('$', self.app) for f in ROOT['files']] + \
-            kwargs.get('files', [])
+    def new(self):
+        """Scaffolds a new package, creates the directory hierarchy
+        """
+        def buildfs(fs, path=""):   
+            if type(fs) is not dict:
+                return self.touch(fs, path)
 
-        for d in dirs:
-            try:
-                os.makedirs(os.path.join(self.path, d))
-            except OSError:
-                print("Skipping '%s', dir exists." % d)
+            for f in fs:                
+                cwd = "%s%s%s" % (path, os.sep, f.replace('$', self.pkgname))
+                if type(fs[f]) is dict:
+                    if not os.path.exists(cwd):
+                        os.makedirs(cwd)
+                    buildfs(fs[f], path=cwd)
+                else:
+                    self.touch(fs[f], cwd)
+        return buildfs(fs=DEFAULTS['fs'](**self.__dict__), path=self.path)
 
-        for f in files:
-            with open(os.path.join(self.path, f), 'wb'):
-                pass
+    def touch(self, asset, path):
+        """Touches a file or resource named $fname into existence at
+        location $path and fills it with $asset data as specified"""
+        if asset and not os.path.exists(path):
+            fname = path.rsplit(os.sep, 1)[-1]
+            if fname.endswith(".py"):
+                asset = header(fname, self.desc, self.author,
+                               self.encoding, self.python) + asset
+            with open(path, 'w') as fout:
+                fout.write(asset)
 
     @as_package
     def install_virtualenv(self):
@@ -116,11 +130,11 @@ class Package(object):
     def install_requirements(self, pkgs=None):
         """Installs default dependencies + user specified pkgs and
         then populates a requirements.txt.
-        """
-        pkgs = pkgs or []
-        for d in DEPENDENCIES:
-            self.as_venv('pip install %s' % d)
+        """                
+        for pkg in (pkgs or DEFAULTS['dependencies']):
+            self.as_venv('pip install %s' % pkg)
 
+        # record installed packages
         with open(os.path.join(self.path, 'requirements.txt'), 'wb') as f:
             f.write(self.as_venv('pip freeze > requirements.txt'))
 
@@ -131,6 +145,50 @@ class Package(object):
         @as_package.
         """
         return key in [d.key for d in pip.get_installed_distributions()]
+
+
+    def freeze(self):
+        """Returns a list of modules installed for this Package"""
+        self._freeze(self.path)
+
+    @staticmethod
+    def _freeze(path):
+        """Generates a list of modules installed within path's local
+        context, useful for generating requirements.txt
+        
+        TODO Consider using context manager instead of chdir
+        see: http://stackoverflow.com/a/431747
+        """
+        with Context(path) as ctx:
+            pkgs = pip.get_installed_distributions()
+            return sorted('%s==%s' % (p.key, p.version) for p in pkgs)
+
+    def setup_virtualenv(self, name='venv'):
+        """Performs the initial configuration and package environment setup"""
+        try:
+            dep = WorkingSet().require('virtualenv')
+        except DistributionNotFound:            
+            pip.main(['install', 'virtualenv'])
+        self.activate_virtualenv(named=name)
+
+    @as_package
+    def activate_virtualenv(self, named):
+        shell = os.environ["SHELL"]
+        subprocess.Popen('mkvirtualenv %s' % named, executable=shell, shell=True,
+                         stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        #'workon %s' % named
+        #'source %s/bin/activate' % named
+
+    @as_package
+    def install(self, dependencies=None):
+        """Installs base dependencies and writes pip freeze to
+        requirements.txt
+        """
+        for d in dependencies:
+            pip.main(['install', d])
+        with open('requirements.txt', 'wb') as f:
+            requirements = '\n'.join(self.freeze())
+            f.write(requirements)
 
 
 if __name__ == "__main__":

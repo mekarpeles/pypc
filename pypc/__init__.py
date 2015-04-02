@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
 """
-    pypc
-    ~~~~~
+     ____  _  _  ____   ___ 
+    (  _ \( \/ )(  _ \ / __)
+     ) __/ )  /  ) __/( (__ 
+    (__)  (__/  (__)   \___)
+    ~~~~~~~~~~~~~~~~~~~~~~~~
 
-    pypc python package creator
+    pypc, the python package creator
 
     :copyright: (c) 2014 by Hackerlist.
-    :license: BSD, see LICENSE for more details.
+    :license: Apache, see LICENSE for more details.
 """
 
-__version__ = "0.1.2-dev"
+__title__ = 'pypc'
+__version__ = "0.1.3"
+from pypc import settings, pypc
