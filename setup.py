@@ -34,13 +34,12 @@ import os
 
 setup(
     name='pypc',
-    version='0.1.3',
+    version='0.1.3-dev',
     url='http://github.com/mekarpeles/pypc',
     author='hackerlist',
     author_email='m@hackerlist.net',
     packages=[
         'pypc',
-        'pypc/tests',
         'pypc/templates'
         ],
     platforms='any',
@@ -65,8 +64,6 @@ setup(
         "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.2",
-        "Programming Language :: Python :: 3.3",
         "Programming Language :: Python :: 3.4"
         ],
     description="Python3 Package Creator",

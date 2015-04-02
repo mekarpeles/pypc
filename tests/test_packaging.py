@@ -11,9 +11,19 @@
     :license: BSD, see LICENSE for more details.
 """
 
-import os
+import sys
+import os.path
 import unittest
-from pypc.pypc import Package
+
+# Add pypc to the test path
+p = os.path.abspath(
+    os.path.join(os.path.join(
+            os.path.dirname(__file__),
+            os.path.pardir),
+                 'pypc'))
+sys.path.append(p)
+    
+import pypc
 
 VALID_PATH = os.path.expanduser('~')
 
@@ -26,8 +36,7 @@ ERR = {
 class TestPackage(unittest.TestCase):
 
     def test_creation(self):
-        self.assertRaises(TypeError, Package, '', ERR['invalid-basename'])
-        p = Package(VALID_PATH)
+        p = pypc.Package(VALID_PATH)
         self.assertTrue(p.path == VALID_PATH, ERR['failed-instantiation'])
 
     def test_generation(self):

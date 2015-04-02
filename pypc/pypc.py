@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 #-*- coding: utf-8 -*-
 
 """
@@ -7,8 +6,8 @@
 
     This module creates new pypc packages
 
-    :copyright: (c) 2014 by Hackerlist.
-    :license: Apache, see LICENSE for more details.
+    :copyright: (c) 2015 by Mek Karpeles.
+    :license: see LICENSE for more details.
 """
 
 import os
@@ -16,7 +15,7 @@ import pip
 import virtualenv
 import subprocess
 from pkg_resources import WorkingSet, DistributionNotFound
-from .settings import DEFAULTS, header
+from settings import DEFAULTS, header
 
 class Context(object):
     """Switches a scope's context so that it's temporarily run within

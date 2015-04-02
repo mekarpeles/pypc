@@ -1,3 +1,13 @@
+# -*- coding: utf-8 -*-
+"""
+    settings.py
+    ~~~~~~~~~~~
+
+    utilities for building files and setting default file values
+
+    :copyright: (c) 2015 by Mek Karpeles.
+    :license: see LICENSE for more details.
+"""
 
 import datetime
 import textwrap
