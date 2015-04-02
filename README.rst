@@ -16,6 +16,7 @@ Usage
 How do I create a pip python package?
 
     $ pypc ~/project
+    
     $ cd ~/project;ls
 
     AUTHORS  CHANGES  docs/  examples/  LICENSE  MANIFEST.in  project/  README.md  requirements.txt  setup.py  tox.in  venv/
