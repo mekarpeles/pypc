@@ -46,10 +46,11 @@ setup(
     include_package_data=True,
     license='LICENSE',
     install_requires=[
-        'argparse == 1.2.1',
-        'pep8 == 1.5.7',
-        'pyflakes == 0.8.1',
-        'flake8 == 2.2.2',
+        'jinja2',
+        'argparse >= 1.2.1',
+        'pep8 >= 1.5.7',
+        'pyflakes >= 0.8.1',
+        'flake8',
         'virtualenv',
     ],
     scripts=[
