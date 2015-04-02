@@ -34,10 +34,10 @@ import os
 
 setup(
     name='pypc',
-    version='0.1.3-dev',
+    version='0.1.3',
     url='http://github.com/mekarpeles/pypc',
-    author='hackerlist',
-    author_email='m@hackerlist.net',
+    author='Mek Karpeles',
+    author_email='michael.karpeles@gmail.com',
     packages=[
         'pypc',
         'pypc/templates'
