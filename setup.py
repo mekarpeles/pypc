@@ -50,7 +50,7 @@ setup(
         'pep8 == 1.5.7',
         'pyflakes == 0.8.1',
         'flake8 == 2.2.2',
-        'virtualenv == 1.11.6',
+        'virtualenv',
     ],
     scripts=[
         "scripts/pypc",
@@ -67,5 +67,5 @@ setup(
         "Programming Language :: Python :: 3.4"
         ],
     description="Python3 Package Creator",
-    long_description=open(os.path.join(os.path.dirname(__file__), 'README.md')).read(),
+    long_description=open(os.path.join(os.path.dirname(__file__), 'README.rst')).read(),
 )
