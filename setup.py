@@ -11,7 +11,7 @@ Generating a Project
 
 .. code:: bash
 
-    $ pypc create helloworld
+    $ pypc helloworld
 
 Setup
 `````
@@ -19,8 +19,11 @@ Setup
 .. code:: bash
 
     $ pip install pypc
+    $ pypc helloworld
+    $ cd helloworld
     $ ls
-    LICENSE pypc/ README requirements.txt setup.py
+
+    AUTHORS CHANGES docs/ examples/ LICENSE MANIFEST.in project/ README.md requirements.txt setup.py tox.in venv/
 
 Links
 `````
@@ -34,7 +37,7 @@ import os
 
 setup(
     name='pypc',
-    version='0.1.37',
+    version='0.1.38',
     url='http://github.com/mekarpeles/pypc',
     author='Mek Karpeles',
     author_email='michael.karpeles@gmail.com',

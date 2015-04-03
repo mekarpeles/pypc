@@ -18,6 +18,9 @@ env = Environment(loader=PackageLoader('pypc', 'templates'))
 def license(**options):
     return env.get_template('LICENSE').render()
 
+def manifest(**options):
+    return env.get_template('MANIFEST.in').render()
+
 def setup(pkgname, version="", desc="", url="", author="", email="",
           dependencies=None, classifiers=None, **kwargs):
     """Generates a project's setup.py"""
@@ -75,7 +78,7 @@ DEFAULTS = {
         'AUTHORS': "",
         'CHANGES': changelog(**options),
         'LICENSE': license(**options),
-        'MANIFEST.in': "",
+        'MANIFEST.in': manifest(**options),
         'README.md': "",
         'tox.in': "",
         'setup.py': setup(**options),

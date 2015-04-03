@@ -52,7 +52,8 @@ class Package(object):
         >>> Package('/home/mek/pythagorean')
         >>> Package('pythagorean')
         """
-        self.dirname, self.pkgname = os.path.split(path)
+        dirname, self.pkgname = os.path.split(path)
+        self.dirname = dirname or os.getcwd()
         self.path = path
         if not self.pkgname:
             raise TypeError("Path '%s' must include a basename" % self.path)
