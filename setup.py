@@ -50,9 +50,9 @@ setup(
     license='LICENSE',
     install_requires=[
         'jinja2',
-        'argparse >= 1.2.1',
-        'pep8 >= 1.5.7',
-        'pyflakes >= 0.8.1',
+        'argparse',
+        'pep8',
+        'pyflakes',
         'flake8',
         'virtualenv',
     ],
