@@ -55,4 +55,19 @@ Alternatives
 * https://github.com/audreyr/cookiecutter
 * https://github.com/seanfisk/python-project-template - Git based, clone repo (requires altering git history)
 
+Questions for you
+=================
+1) Does the file structure pypc generates break any conventions?
+2) Is the code for pypc readable/accessible?
+3) Feature suggestions? (would love to auto-init venv)
+
+Disclaimer
+==========
+Pypc is a pre-alpha proof of concept. It's slow as it installs pyflakes, pep8, virtualenv sets up a virtualenv, and then generates a freeze list of requirements).
+Right now there is little to no test-coverage; being it is a proof of concept, I'll try to continue as TDD.
+
+Discussion
+==========
+Other considerations and details can be found on the pypa mailing list: https://groups.google.com/forum/#!searchin/pypa-dev/mek/pypa-dev/eaku1xvUVHU/Kbj_17sP23kJ
+
 .. |Build Status| image:: https://travis-ci.org/mekarpeles/pypc.png
