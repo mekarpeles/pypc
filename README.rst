@@ -5,9 +5,9 @@ pypc
 The Python3 Package Creator.
 
 Pypc generates standard scaffolding and environment for a Python package.
-# Creates the directory structure show above in `Usage`
-# Installs virtualenv + creates venv directory
-# Installs pyflakes, pep8 to venv
+* Creates the directory structure show above in `Usage`
+* Installs virtualenv + creates venv directory
+* Installs pyflakes, pep8 to venv
 
 Installation
 ============
@@ -34,9 +34,9 @@ Options
 
 Philosopy
 =========
-# KISS. Small and simple enough (i.e. Flask/webpy, not django) that it can be integrated into pip,
-# Defaults. a default modus of operandi which works offline,
-# PEP 20. "There should be one-- and preferably only one --obvious way to do it." In this respect, the general file structure should remain static and accept overrides/overloading of templates and if specific modules/packages (like flask) require specific (additional) file structure, a builder can import/bootstrap using pypc (as it would pip)
+* KISS. Small and simple enough (i.e. Flask/webpy, not django) that it can be integrated into pip,
+* Defaults. a default modus of operandi which works offline,
+* PEP 20. "There should be one-- and preferably only one --obvious way to do it." In this respect, the general file structure should remain static and accept overrides/overloading of templates and if specific modules/packages (like flask) require specific (additional) file structure, a builder can import/bootstrap using pypc (as it would pip)
 
 Standards
 =========
