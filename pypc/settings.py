@@ -49,14 +49,14 @@ def header(name, desc, author, python, encoding):
     underline = len(name) * '~'
     desc = textwrap.fill(desc, width=79)
     return env.get_template('header.html').render(
-        version=python, encoding=encoding, name=name,
-        underline=underline, desc=desc, year=year, author=author
+        encoding=encoding, name=name, underline=underline, desc=desc,
+        year=year, author=author
         )
 
 DEFAULTS = {
     'pkgname': 'python-mypkg',
     'version': '0.0.1',
-    'python': '3.4',
+    'python': '3.4', #use env?
     'encoding': 'utf-8',
     'desc': '',
     'author': 'Anonymous',
@@ -72,9 +72,6 @@ DEFAULTS = {
     'fs': lambda **options: {
         'docs': {},
         'examples': {},
-        'tests': {
-            "__init__.py": "",
-            },
         'AUTHORS': "",
         'CHANGES': changelog(**options),
         'LICENSE': license(**options),
@@ -82,11 +79,13 @@ DEFAULTS = {
         'README.md': "",
         'tox.in': "",
         'setup.py': setup(**options),
-        '__init__.py': init(**options),
         'Makefile': "",
+        'tests': {
+            "__init__.py": "", #todo
+            },
         '$': { # pkg dir
-            '__init__.py': ""
-            } 
+            '__init__.py': init(**options),
+            }
         }
     }
 

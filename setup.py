@@ -34,7 +34,7 @@ import os
 
 setup(
     name='pypc',
-    version='0.1.3',
+    version='0.1.37',
     url='http://github.com/mekarpeles/pypc',
     author='Mek Karpeles',
     author_email='michael.karpeles@gmail.com',

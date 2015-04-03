@@ -16,7 +16,7 @@ import pip
 import virtualenv
 import subprocess
 from pkg_resources import WorkingSet, DistributionNotFound
-from settings import DEFAULTS, header
+from .settings import DEFAULTS, header
 
 class Context(object):
     """Switches a scope's context so that it's temporarily run within

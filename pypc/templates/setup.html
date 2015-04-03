@@ -10,13 +10,12 @@ setup(
     author='{{ author }}',
     author_email='{{ email }}',
     packages=[
+        '{{ name }}'
         ],
     platforms='any',
     license='LICENSE',
     install_requires=[
-        {% for d, v in dependencies.items() %}
-        '{{ d }}': '{{ v }}',
-        {% endfor %}        
+        {% for d, v in dependencies.items() %}'{{ d }}': '{{ v }}',{% endfor %}        
     ],
     scripts=[
         ],
@@ -28,3 +27,4 @@ setup(
     description={{ desc }},
     long_description=open(os.path.join(os.path.dirname(__file__), 'README.md')).read(),
 )
+

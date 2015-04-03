@@ -14,11 +14,10 @@
 """
 
 __title__ = 'pypc'
-__version__ = "0.1.3"
+__version__ = "0.1.37"
 __author__ = [
     "Mek <michael.karpeles@gmail.com>"
 ]
 
-from pypc import Package
-
-
+from .pypc import Package
+from .settings import DEFAULTS
