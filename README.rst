@@ -5,6 +5,7 @@ pypc
 The Python3 Package Creator.
 
 Pypc generates standard scaffolding and environment for a Python package.
+
 * Creates the directory structure show above in `Usage`
 * Installs virtualenv + creates venv directory
 * Installs pyflakes, pep8 to venv
