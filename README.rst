@@ -2,6 +2,8 @@
 pypc
 ====
 
+|Build Status|
+
 The Python3 Package Creator.
 
 Pypc generates standard scaffolding and environment for a Python package.
