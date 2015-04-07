@@ -5,13 +5,14 @@ import os
 import sys
 import ntpath
 import argparse
+import getpass # experimental
 from pypc.pypc import Package
 from pypc import __title__, __version__
 
 def argparser():
     """
-    options:
-        o - offline (does not pip install dependencies)
+    todo:
+        -o - offline (does not attempt pip install dependencies)
     """
     parser = argparse.ArgumentParser(description=__title__)
     parser.add_argument('-m', '--minimal', help="Minimal mode, setup.py only",
@@ -21,7 +22,7 @@ def argparser():
                             % (__title__, __version__))
     parser.add_argument(dest="path", help="Package full path")
     parser.add_argument('--author', dest="author", help="Author's name",
-                        default='')
+                        default=getpass.getuser())
     parser.add_argument('--email', dest="email", help="Author's email",
                         default='')
     parser.add_argument('--version', dest="version",
@@ -32,6 +33,8 @@ def argparser():
                         default='no description available')
     parser.add_argument('--url', dest="url", help="Package url",
                         default='')
+    parser.add_argument('--rm', dest="readme", help="README filename",
+                        default='README.rst')
     parser.add_argument('--fs', dest="fs", help=".json File Structure",
                         default=None)
     return parser
@@ -55,11 +58,14 @@ if __name__ == "__main__":
         'author': args.author,
         'email': args.email,
         'version': args.version,
-        'classifiers': [], #todo
+        'classifiers': [], #todo        
         'url': args.url,
         'desc': args.desc,
+        'readme': args.readme,
         'venv': 'venv'
         }
+    if args.minimal:
+        options['dependencies'] = {}
     pkg = Package(**options)
     pkg.new(fs=args.fs, minimal=args.minimal)
     if not args.minimal:

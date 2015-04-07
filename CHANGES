@@ -18,6 +18,8 @@ Version 0.1.3
 - 0.1.39, added minimalist mode (only setup.py, skips virtualenv)
 -- added pypc -V version
 -- added --fs pluggable json fs template (raises NotImplementedError)
+-- variable README names supported with --rm (ominously named)
+-- defaults author using getpass (questionable, likely won't work on windows)
 
 Version 0.1.2
 -------------

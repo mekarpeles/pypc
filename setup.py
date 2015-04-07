@@ -51,9 +51,9 @@ setup(
     install_requires=[
         'jinja2',
         'argparse',
+        'flake8',
         'pep8',
         'pyflakes',
-        'flake8',
         'virtualenv',
     ],
     scripts=[

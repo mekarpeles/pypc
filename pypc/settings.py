@@ -18,15 +18,22 @@ env = Environment(loader=PackageLoader('pypc', 'templates'))
 def license(**options):
     return env.get_template('LICENSE').render()
 
+def readme(pkgname, desc="", **options):
+    underline = "=" * len(pkgname)
+    return env.get_template('README').render(
+        pkgname=pkgname, underline=underline, desc=desc
+        )
+
 def manifest(**options):
     return env.get_template('MANIFEST.in').render()
 
 def setup(pkgname, version="", desc="", url="", author="", email="",
-          dependencies=None, classifiers=None, **kwargs):
+          dependencies=None, classifiers=None, readme="README.rst", **kwargs):
     """Generates a project's setup.py"""
     return env.get_template('setup.html').render(
         name=pkgname, version=version, url=url, author=author, email=email,
-        desc=desc, dependencies=dependencies, classifiers=classifiers
+        desc=desc, readme=readme, dependencies=dependencies,
+        classifiers=classifiers
         )
 
 def changelog(version, **kwargs):
@@ -57,6 +64,7 @@ def header(name, desc, author, python, encoding):
         )
 
 MINIMAL = lambda **options: {
+    options['readme']: readme(**options),
     'setup.py': setup(**options),
     '$': { # pkg dir
         '__init__.py': init(**options),
@@ -70,7 +78,6 @@ STANDARD = lambda **options: {
     'CHANGES': changelog(**options),
     'LICENSE': license(**options),
     'MANIFEST.in': manifest(**options),
-    'README.md': "",
     'tox.in': "",
     'setup.py': setup(**options),
     'Makefile': "",
@@ -83,6 +90,7 @@ STANDARD = lambda **options: {
     }
 
 DEFAULTS = {
+    'readme': 'README.rst',
     'pkgname': 'python-mypkg',
     'version': '0.0.1',
     'python': '3.4', #use env?
