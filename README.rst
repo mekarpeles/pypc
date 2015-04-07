@@ -29,9 +29,16 @@ How do I create a pip python package?
 Options
 =======
 
-    usage: pypc [-h] [--author AUTHOR] [--email EMAIL] [--version VERSION]
-                [--desc DESC] [--url URL]
-                path
+    usage: pypc [-h] [-m] [-V] [--author AUTHOR] [--email EMAIL]
+            [--version VERSION] [--desc DESC] [--url URL] [--fs FS]
+            path
+
+If you only want to create a package with a setup.py (no virtual env,
+etc), use the -m or --minimal flag.
+
+-V outputs the version of pypc. --version is used to specify the
+ initial version of the package you are creation. This is slightly
+ confusion, and improvements are welcome.
 
 Philosopy
 =========
@@ -69,6 +76,6 @@ Right now there is little to no test-coverage; being it is a proof of concept, I
 
 Discussion
 ==========
-Other considerations and details can be found on the pypa mailing list: https://groups.google.com/forum/#!searchin/pypa-dev/mek/pypa-dev/eaku1xvUVHU/Kbj_17sP23kJ
+Join the conversation! Other design considerations and details can be found on the pypa mailing list: https://groups.google.com/forum/#!searchin/pypa-dev/mek/pypa-dev/eaku1xvUVHU/Kbj_17sP23kJ
 
 .. |Build Status| image:: https://travis-ci.org/mekarpeles/pypc.png
