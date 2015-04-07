@@ -16,8 +16,7 @@ setup(
     license='LICENSE',
     install_requires=[
         {% for d, v in dependencies.items() %}'{{ d }}': '{{ v }}',
-        {% endfor %}
-    ],
+        {% endfor %}],
     scripts=[
         ],
     classifiers=[

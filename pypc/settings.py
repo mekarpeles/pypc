@@ -56,6 +56,32 @@ def header(name, desc, author, python, encoding):
         year=year, author=author
         )
 
+MINIMAL = lambda **options: {
+    'setup.py': setup(**options),
+    '$': { # pkg dir
+        '__init__.py': init(**options),
+        }
+    }
+
+STANDARD = lambda **options: {
+    'docs': {},
+    'examples': {},
+    'AUTHORS': "",
+    'CHANGES': changelog(**options),
+    'LICENSE': license(**options),
+    'MANIFEST.in': manifest(**options),
+    'README.md': "",
+    'tox.in': "",
+    'setup.py': setup(**options),
+    'Makefile': "",
+    'tests': {
+        "__init__.py": "", #todo
+        },
+    '$': { # pkg dir
+        '__init__.py': init(**options),
+        }
+    }
+
 DEFAULTS = {
     'pkgname': 'python-mypkg',
     'version': '0.0.1',
@@ -71,24 +97,5 @@ DEFAULTS = {
         'pyflakes': '0.8.1'
         },
     'classifiers': [],
-    'venv': 'venv',
-    'fs': lambda **options: {
-        'docs': {},
-        'examples': {},
-        'AUTHORS': "",
-        'CHANGES': changelog(**options),
-        'LICENSE': license(**options),
-        'MANIFEST.in': manifest(**options),
-        'README.md': "",
-        'tox.in': "",
-        'setup.py': setup(**options),
-        'Makefile': "",
-        'tests': {
-            "__init__.py": "", #todo
-            },
-        '$': { # pkg dir
-            '__init__.py': init(**options),
-            }
-        }
+    'venv': 'venv'
     }
-

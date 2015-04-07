@@ -16,7 +16,7 @@ import pip
 import virtualenv
 import subprocess
 from pkg_resources import WorkingSet, DistributionNotFound
-from .settings import DEFAULTS, header
+from .settings import DEFAULTS, MINIMAL, STANDARD, header
 
 class Context(object):
     """Switches a scope's context so that it's temporarily run within
@@ -75,7 +75,7 @@ class Package(object):
                 return func(self, *args, **kwargs)
         return switch_ctx
 
-    def new(self):
+    def new(self, fs=None, minimal=False):
         """Scaffolds a new package, creates the directory hierarchy
         """
         def buildfs(fs, path=""):   
@@ -90,7 +90,10 @@ class Package(object):
                     buildfs(fs[f], path=cwd)
                 else:
                     self.touch(fs[f], cwd)
-        return buildfs(fs=DEFAULTS['fs'](**self.__dict__), path=self.path)
+        if fs:
+            raise NotImplementedError
+        fs = fs or (MINIMAL if minimal else STANDARD)(**self.__dict__)
+        return buildfs(fs=fs, path=self.path)
 
     def touch(self, asset, path):
         """Touches a file or resource named $fname into existence at
@@ -146,7 +149,6 @@ class Package(object):
         @as_package.
         """
         return key in [d.key for d in pip.get_installed_distributions()]
-
 
     def freeze(self):
         """Returns a list of modules installed for this Package"""

@@ -2,10 +2,11 @@
 #-*- coding: utf-8 -*-
 
 import os
+import sys
 import ntpath
 import argparse
 from pypc.pypc import Package
-from pypc import __title__
+from pypc import __title__, __version__
 
 def argparser():
     """
@@ -13,17 +14,26 @@ def argparser():
         o - offline (does not pip install dependencies)
     """
     parser = argparse.ArgumentParser(description=__title__)
+    parser.add_argument('-m', '--minimal', help="Minimal mode, setup.py only",
+                        action="store_true")
+    parser.add_argument('-V', help="Displays the pypc version",
+                        action="version", version="%s v%s" \
+                            % (__title__, __version__))
     parser.add_argument(dest="path", help="Package full path")
     parser.add_argument('--author', dest="author", help="Author's name",
                         default='')
     parser.add_argument('--email', dest="email", help="Author's email",
                         default='')
-    parser.add_argument('--version', dest="version", help="Package version",
+    parser.add_argument('--version', dest="version",
+                        help="Your package's version: defaults to v0.0.1" \
+                            "(use -V for pypc version)",
                         default='0.0.1')
     parser.add_argument('--desc', dest="desc", help="Package desc",
                         default='no description available')
     parser.add_argument('--url', dest="url", help="Package url",
                         default='')
+    parser.add_argument('--fs', dest="fs", help=".json File Structure",
+                        default=None)
     return parser
 
 def normalize_path(path):
@@ -34,7 +44,11 @@ def normalize_path(path):
 if __name__ == "__main__":
     parser = argparser()
     args = parser.parse_args()
-
+    if args.fs:
+        # It'd be nice to collect analytics on how often this is req'd.
+        # Cookiecutter + Donald Stufft lead me to believe often
+        # see: groups.google.com/forum/#!topic/pypa-dev/eaku1xvUVHU
+        raise NotImplementedError("")
     options = {
         'path': normalize_path(args.path),
         'pkgname' : ntpath.split(args.path)[-1],
@@ -47,6 +61,7 @@ if __name__ == "__main__":
         'venv': 'venv'
         }
     pkg = Package(**options)
-    pkg.new()
-    pkg.install_virtualenv()
-    pkg.install_requirements()
+    pkg.new(fs=args.fs, minimal=args.minimal)
+    if not args.minimal:
+        pkg.install_virtualenv()
+        pkg.install_requirements()
