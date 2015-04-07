@@ -19,7 +19,13 @@ Installation
 
 Usage
 =====
-How do I create a pip python package?
+How do I create a pip python package? The following will create a
+standard package, as generally described in
+https://packaging.python.org/en/latest/distributing.html. It will also
+setup virtualenv, pip install pyflakes and pep8, and generate a
+requirements.txt.
+
+    # Standard build
 
     $ pypc project
     
@@ -27,20 +33,35 @@ How do I create a pip python package?
 
     AUTHORS  CHANGES  docs/  examples/  LICENSE  MANIFEST.in  project/  README.md  requirements.txt  setup.py  tox.in  venv/
 
+Alternatively, you can run in minimal mode with -m or --minimal. This
+only creates a README and setup.py and does not require network access
+(after pypc is installed).
+
+    # Minimal install
+
+    $ pypc -m project
+
+    $ cd project;ls
+
+    project/  README.rst  setup.py
+
+In both cases, project/ is populated with a __init__.py.
+
 
 Options
 =======
 
     usage: pypc [-h] [-m] [-V] [--author AUTHOR] [--email EMAIL]
-            [--version VERSION] [--desc DESC] [--url URL] [--fs FS]
-            path
+                [--version VERSION] [--desc DESC] [--url URL] [--rm README]
+                [--fs FS]
+                path
 
 If you only want to create a package with a setup.py (no virtual env,
 etc), use the -m or --minimal flag.
 
--V outputs the version of pypc. --version is used to specify the
- initial version of the package you are creation. This is slightly
- confusion, and improvements are welcome.
+Note: -V outputs the version of pypc whereas --version is used to
+ specify the initial version of the package you are creation. This is
+ slightly confusion, and improvements are welcome.
 
 Philosopy
 =========
