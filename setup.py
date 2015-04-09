@@ -86,6 +86,6 @@ setup(
         'console_scripts': ['pypc=pypc.cli:main'],
         },
     extras_require={
-        ':python_version<="2.7"': ['argparse'],
+        ':python_version=="2.7"': ['argparse']
         }
 )
