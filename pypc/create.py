@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 """
     pypc
@@ -17,6 +17,7 @@ import virtualenv
 import subprocess
 from pkg_resources import WorkingSet, DistributionNotFound
 from .settings import DEFAULTS, setup_fs, setup_opts, header
+
 
 class Context(object):
     """Switches a scope's context so that it's temporarily run within
@@ -66,8 +67,8 @@ class Package(object):
         restores back to pypc's native context afterwards.
         """
         def switch_ctx(self, *args, **kwargs):
-            """Allows Package methods to easily operate within / change paths by
-            wrapping them with Context.
+            """Allows Package methods to easily operate within /
+            change paths by wrapping them with Context.
             """
             with Context(self.path):
                 return func(self, *args, **kwargs)
@@ -93,7 +94,7 @@ class Package(object):
                 self.install_virtualenv()
                 print('\nTo activate virtualenv, run:')
                 print('\n\t`source venv/bin/activate`\n')
-                pkgs = pkgs=kwargs.get('dependencies', {})
+                pkgs = kwargs.get('dependencies', {})
                 self.install_requirements(pkgs=pkgs)
             return res
         return inner
@@ -104,7 +105,6 @@ class Package(object):
         """Scaffolds a new package, creates the directory hierarchy
         """
         minimal = options.pop('minimal', False)
-        strict = options.pop('strict', False)
         opts = setup_opts(minimal=minimal, **options)
         _fs = fs or setup_fs(minimal=minimal, **opts)
 
@@ -136,8 +136,10 @@ class Package(object):
         if contents and not os.path.exists(path):
             fname = path.rsplit(os.sep, 1)[-1]
             if fname.endswith(".py"):
-                _header = header(fname, options['desc'], options['author'],
-                                 options['python'], options['encoding'])
+                _header = header(
+                    fname, options['desc'], options['author'],
+                    options['python'], options['encoding']
+                    )
                 contents = _header + contents
             with open(path, 'w') as fout:
                 fout.write(contents)
@@ -150,7 +152,7 @@ class Package(object):
         if not self.is_installed('virtualenv'):
             pip.main(['install', 'virtualenv'])
         venv = os.path.join(self.path, self.venv)
-        virtualenv.create_environment(self.venv)
+        virtualenv.create_environment(venv)
 
     @as_package
     def as_venv(self, cmd=None):
@@ -170,11 +172,10 @@ class Package(object):
     def install_requirements(self, pkgs=None):
         """Installs default dependencies + user specified pkgs and
         then populates a requirements.txt.
-        """                
+        """
         for pkg in (pkgs or DEFAULTS['dependencies']):
             self.as_venv('pip install %s' % pkg)
 
-        # record installed packages
         with open(os.path.join(self.path, 'requirements.txt'), 'wb') as f:
             f.write(self.as_venv('pip freeze > requirements.txt'))
 
@@ -194,27 +195,28 @@ class Package(object):
     def _freeze(path):
         """Generates a list of modules installed within path's local
         context, useful for generating requirements.txt
-        
+
         TODO Consider using context manager instead of chdir
         see: http://stackoverflow.com/a/431747
         """
-        with Context(path) as ctx:
+        with Context(path):
             pkgs = pip.get_installed_distributions()
             return sorted('%s==%s' % (p.key, p.version) for p in pkgs)
 
     def setup_virtualenv(self, name='venv'):
         """Performs the initial configuration and package environment setup"""
         try:
-            dep = WorkingSet().require('virtualenv')
-        except DistributionNotFound:            
+            WorkingSet().require('virtualenv')
+        except DistributionNotFound:
             pip.main(['install', 'virtualenv'])
         self.activate_virtualenv(named=name)
 
     @as_package
     def activate_virtualenv(self, named):
         shell = os.environ["SHELL"]
-        subprocess.Popen('mkvirtualenv %s' % named, executable=shell, shell=True,
-                         stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        subprocess.Popen('mkvirtualenv %s' % named, executable=shell,
+                         shell=True, stdout=subprocess.PIPE,
+                         stderr=subprocess.STDOUT)
 
     @as_package
     def install(self, dependencies=None):

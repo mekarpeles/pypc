@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-     ____  _  _  ____   ___ 
+     ____  _  _  ____   ___
     (  _ \( \/ )(  _ \ / __)
-     ) __/ )  /  ) __/( (__ 
+     ) __/ )  /  ) __/( (__
     (__)  (__/  (__)   \___)
     ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -20,8 +20,8 @@ __author__ = [
 ]
 
 import sys
-from .create import Package
-from .settings import DEFAULTS
+from .create import Package  # NOQA
+from .settings import DEFAULTS  # NOQA
 from .cli import main
 
 if __name__ == '__main__':

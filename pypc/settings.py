@@ -15,8 +15,10 @@ from jinja2 import Environment, PackageLoader
 
 env = Environment(loader=PackageLoader('pypc', 'templates'))
 
+
 def license(**options):
     return env.get_template('LICENSE').render()
+
 
 def readme(pkgname, desc="", **options):
     underline = "=" * len(pkgname)
@@ -24,8 +26,10 @@ def readme(pkgname, desc="", **options):
         pkgname=pkgname, underline=underline, desc=desc
         )
 
+
 def manifest(readme, **options):
     return env.get_template('MANIFEST.in').render(readme=readme)
+
 
 def setup(pkgname, version="", desc="", url="", author="", email="",
           dependencies=None, classifiers=None, readme="README.rst", **kwargs):
@@ -36,11 +40,13 @@ def setup(pkgname, version="", desc="", url="", author="", email="",
         classifiers=classifiers
         )
 
+
 def changelog(version, **kwargs):
     """Generates a project's CHANGES changelog"""
     return env.get_template('CHANGES').render(
         version=version, date=datetime.datetime.now().ctime()
         )
+
 
 def init(pkgname, version="", author="", **kwargs):
     """
@@ -53,6 +59,7 @@ def init(pkgname, version="", author="", **kwargs):
         title=pkgname, version=version, author=author
         )
 
+
 def header(name, desc, author, python, encoding):
     """Creates headers for Python source files"""
     year = datetime.date.today().year
@@ -63,12 +70,14 @@ def header(name, desc, author, python, encoding):
         year=year, author=author
         )
 
+
 def setup_opts(minimal=False, **options):
     """Fills in the appropriate defaults within options dict"""
     for k in DEFAULTS:
         options.setdefault(k, options.get(k, DEFAULTS[k]))
     options['dependencies'] = {} if minimal else options['dependencies']
     return options
+
 
 def setup_fs(minimal=False, **options):
     """Return either a minimal or standard file system dict"""
@@ -82,7 +91,7 @@ MINIMAL = lambda **options: {
     'setup.py': setup(**options),
     'setup.cfg': env.get_template('setup.cfg').render(),
     'MANIFEST.in': manifest(**options),
-    '$': { # pkg dir
+    '$': {
         '__init__.py': init(**options),
         }
     }
@@ -94,7 +103,7 @@ STANDARD = lambda **options: {
     'LICENSE': license(**options),
     'tox.in': "",
     'tests': {
-        "__init__.py": "", #todo
+        "__init__.py": "",
         }
     }
 
@@ -102,7 +111,7 @@ DEFAULTS = {
     'readme': 'README.rst',
     'pkgname': 'python-mypkg',
     'version': '0.0.1',
-    'python': '3.4', #use env?
+    'python': '3.4',
     'encoding': 'utf-8',
     'desc': '',
     'author': 'Anonymous',
