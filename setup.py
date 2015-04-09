@@ -64,6 +64,7 @@ setup(
         'pypc',
         'pypc/templates'
         ],
+    keywords="pypc package creator pip",
     platforms='any',
     include_package_data=True,
     license='LICENSE',
@@ -72,10 +73,10 @@ setup(
         'virtualenv'
     ],
     classifiers=[
-        'Development Status :: 1 - Planning',
-        'License :: OSI Approved :: BSD License',
-        "Operating System :: OS Independent",
-        'Intended Audience :: Developers',
+        'Development Status :: 2 - Pre-Alpha',
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Topic :: Software Development :: Build Tools",
         "Programming Language :: Python",
         "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 2.7",
