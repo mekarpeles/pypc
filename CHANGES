@@ -3,12 +3,13 @@ Pypc Changelog
 
 Here you can see the full list of changes between each Pypc release.
 
-Version 0.1.5a
---------------
+Version 0.1.5-dev1
+------------------
 - flake8 compliant
 - fixed bug in @strict decorator pkgs = pkgs=...
 - MANIFEST.in only has README by default
 - added keywords
+- added __init__.html template (avoids flake8 end of file newline conflict)
 
 Version 0.1.4
 -------------
