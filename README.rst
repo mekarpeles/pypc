@@ -9,7 +9,7 @@ The Python3 Package Creator.
 Pypc generates standard scaffolding and environment for a Python package.
 
 * Populates the directory structure show in `Usage`
-* Installs virtualenv + creates venv directory
+* --strict Installs virtualenv + creates venv directory
 * Installs pyflakes, pep8 to venv
 
 Installation
@@ -27,7 +27,7 @@ requirements.txt.
 
     $ pypc project && ls
 
-    AUTHORS  CHANGES  docs/  examples/  LICENSE  MANIFEST.in  project/  README.md  requirements.txt  setup.py  tox.in  venv/
+    CHANGES  docs/  examples/  LICENSE  MANIFEST.in  project/  README.md  setup.py  tox.in
 
 Alternatively, you can run in minimal mode with -m or --minimal. This
 only creates a README and setup.py and does not require network access
@@ -37,7 +37,7 @@ only creates a README and setup.py and does not require network access
 
     $ pypc -m project && ls
 
-    project/  README.rst  setup.py setup.cfg
+    project/  MANIFEST.in  README.rst  setup.py setup.cfg
 
 In both cases, a project/ subdirectory is populated with an __init__.py.
 
@@ -68,7 +68,7 @@ Pypc can be imported and used as library.
 
     >>> from pypc.create import Package
     >>> p = Package("pkgname", path="~/optional") # defaults to os.getcwd()
-    >>> p.new(**{}) # see pypc.settings.DEFAULTS for a list of default (key,vals)
+    >>> p.new(**{'readme': 'README.md'}) # see pypc.settings.DEFAULTS for a list of default options (key,vals)
 
 Philosopy
 =========
