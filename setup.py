@@ -20,8 +20,6 @@ Setup
 
     $ pip install pypc
     $ pypc helloworld
-    $ cd helloworld
-    $ ls
 
     AUTHORS CHANGES docs/ examples/ LICENSE MANIFEST.in project/ README.md requirements.txt setup.py tox.in venv/
 
@@ -32,15 +30,36 @@ Links
 
 """
 
-from setuptools import setup
+import codecs
 import os
+import re
+from setuptools import setup
+
+here = os.path.abspath(os.path.dirname(__file__))
+
+def read(*parts):
+    """Taken from pypa pip setup.py:
+    intentionally *not* adding an encoding option to open, See:
+       https://github.com/pypa/virtualenv/issues/201#issuecomment-3145690
+    """
+    return codecs.open(os.path.join(here, *parts), 'r').read()
+
+def find_version(*file_paths):
+    version_file = read(*file_paths)
+    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]",
+                              version_file, re.M)
+    if version_match:
+        return version_match.group(1)
+    raise RuntimeError("Unable to find version string.")
 
 setup(
     name='pypc',
-    version='0.1.39',
-    url='http://github.com/mekarpeles/pypc',
+    version=find_version("pypc", "__init__.py"),
+    description="Python3 Package Creator",
+    long_description=read('README.rst'),
     author='Mek Karpeles',
     author_email='michael.karpeles@gmail.com',
+    url='http://github.com/mekarpeles/pypc',
     packages=[
         'pypc',
         'pypc/templates'
@@ -52,13 +71,9 @@ setup(
         'jinja2',
         'argparse',
         'flake8',
-        'pep8',
         'pyflakes',
-        'virtualenv',
+        'virtualenv'
     ],
-    scripts=[
-        "scripts/pypc",
-        ],
     classifiers=[
         'Development Status :: 1 - Planning',
         'License :: OSI Approved :: BSD License',
@@ -70,6 +85,7 @@ setup(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.4"
         ],
-    description="Python3 Package Creator",
-    long_description=open(os.path.join(os.path.dirname(__file__), 'README.rst')).read(),
+    entry_points={
+        'console_scripts': ['pypc=pypc.cli:main'],
+        }
 )

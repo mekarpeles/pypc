@@ -55,7 +55,7 @@ def init(pkgname, version="", desc="", author="", **kwargs):
 
 def header(name, desc, author, python, encoding):
     """Creates headers for Python source files"""
-    year = datetime.date.today().year + 1
+    year = datetime.date.today().year
     underline = len(name) * '~'
     desc = textwrap.fill(desc, width=79)
     return env.get_template('header.html').render(
@@ -63,9 +63,24 @@ def header(name, desc, author, python, encoding):
         year=year, author=author
         )
 
+def setup_opts(minimal=False, **options):
+    """Fills in the appropriate defaults within options dict"""
+    for k in DEFAULTS:
+        options.setdefault(k, options.get(k, DEFAULTS[k]))
+    options['dependencies'] = {} if minimal else options['dependencies']
+    return options
+
+def setup_fs(minimal=False, **options):
+    """Return either a minimal or standard file system dict"""
+    fs = MINIMAL(**options)
+    if not minimal:
+        fs.update(STANDARD(**options))
+    return fs
+
 MINIMAL = lambda **options: {
     options['readme']: readme(**options),
     'setup.py': setup(**options),
+    'setup.cfg': env.get_template('setup.cfg').render(),
     '$': { # pkg dir
         '__init__.py': init(**options),
         }
@@ -79,13 +94,8 @@ STANDARD = lambda **options: {
     'LICENSE': license(**options),
     'MANIFEST.in': manifest(**options),
     'tox.in': "",
-    'setup.py': setup(**options),
-    'Makefile': "",
     'tests': {
         "__init__.py": "", #todo
-        },
-    '$': { # pkg dir
-        '__init__.py': init(**options),
         }
     }
 

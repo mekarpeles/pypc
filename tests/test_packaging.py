@@ -15,8 +15,9 @@ import sys
 import os.path
 import unittest
 
-from pypc.pypc import Package
+from pypc.create import Package
 
+VALID_PKGNAME = 'foo'
 VALID_PATH = os.path.expanduser('~')
 
 ERR = {
@@ -27,7 +28,7 @@ ERR = {
 class TestPackage(unittest.TestCase):
 
     def test_creation(self):
-        p = Package(VALID_PATH)
+        p = Package(VALID_PKGNAME, path=VALID_PATH)
         self.assertTrue(p.path == VALID_PATH, ERR['failed-instantiation'])
 
     def test_generation(self):

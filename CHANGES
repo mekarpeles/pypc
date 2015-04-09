@@ -20,6 +20,15 @@ Version 0.1.3
 -- added --fs pluggable json fs template (raises NotImplementedError)
 -- variable README names supported with --rm (ominously named)
 -- defaults author using getpass (questionable, likely won't work on windows)
+- 0.1.40
+-- fixing year
+-- initing project in pwd instead of creating dir
+-- adding disallow_customfs to handle custom fs integration gracefully
+-- renaming pypc.py to create.py to fit under pip/commands
+-- create cli.py + porting scripts/pypc functionality to __init__
+-- py2.7.9 may require pyopenssl ndg-httpsclient pyasn1
+-- added --strict flag to setup virtualenv + pip install deps
+-- added --venv flag to specify venv directory
 
 Version 0.1.2
 -------------

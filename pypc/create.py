@@ -16,7 +16,7 @@ import pip
 import virtualenv
 import subprocess
 from pkg_resources import WorkingSet, DistributionNotFound
-from .settings import DEFAULTS, MINIMAL, STANDARD, header
+from .settings import DEFAULTS, setup_fs, setup_opts, header
 
 class Context(object):
     """Switches a scope's context so that it's temporarily run within
@@ -47,20 +47,18 @@ class Package(object):
     python packages (across multiple python versions)
     """
 
-    def __init__(self, path, **options):
-        """
-        >>> Package('/home/mek/pythagorean')
+    def __init__(self, pkgname, path=None, venv='venv'):
+        """Assumes path of current working directory $PWD by default.
         >>> Package('pythagorean')
         """
-        dirname, self.pkgname = os.path.split(path)
-        self.dirname = dirname or os.getcwd()
-        self.path = path
-        if not self.pkgname:
-            raise TypeError("Path '%s' must include a basename" % self.path)
-
-        for k in DEFAULTS.keys():
-            if not hasattr(self, k):
-                setattr(self, k, options.get(k, DEFAULTS[k]))
+        _path = path or os.getcwd()
+        if not os.path.exists(_path):
+            raise OSError('Valid existing path required')
+        if not pkgname:
+            raise TypeError("Path '%s' must include a basename" % _path)
+        self.path = _path
+        self.pkgname = pkgname
+        self.venv = venv
 
     def as_package(func):
         """Decorator which preempts func by switching directories to
@@ -75,36 +73,74 @@ class Package(object):
                 return func(self, *args, **kwargs)
         return switch_ctx
 
-    def new(self, fs=None, minimal=False):
+    def disallow_customfs(f):
+        """Convenience decorator, raises exception if user attempts to
+        provide custom `fs` before feature is implemented
+        """
+        def inner(self, *args, **kwargs):
+            if kwargs.get('fs', None):
+                raise NotImplementedError
+            return f(self, *args, **kwargs)
+        return inner
+
+    def strict(f):
+        """Decorates func with ability to install pip dependencies +
+        setup virtuenv if strict-mode (--strict flag is present)
+        """
+        def inner(self, *args, **kwargs):
+            res = f(self, *args, **kwargs)
+            if kwargs.get('strict', False):
+                self.install_virtualenv()
+                print('\nTo activate virtualenv, run:')
+                print('\n\t`source venv/bin/activate`\n')
+                pkgs = pkgs=kwargs.get('dependencies', {})
+                self.install_requirements(pkgs=pkgs)
+            return res
+        return inner
+
+    @strict
+    @disallow_customfs
+    def new(self, fs=None, **options):
         """Scaffolds a new package, creates the directory hierarchy
         """
-        def buildfs(fs, path=""):   
-            if type(fs) is not dict:
-                return self.touch(fs, path)
+        minimal = options.pop('minimal', False)
+        strict = options.pop('strict', False)
+        opts = setup_opts(minimal=minimal, **options)
+        _fs = fs or setup_fs(minimal=minimal, **opts)
 
-            for f in fs:                
-                cwd = "%s%s%s" % (path, os.sep, f.replace('$', self.pkgname))
+        def buildfs(fs, path=""):
+            """Recurses the filesystem `fs` dict and touches necessary
+            files with appropriate contents
+            """
+            if type(fs) is not dict:
+                return self.touch(fs, path, **opts)
+
+            for f in fs:
+                cwd = os.path.join(path, f.replace('$', self.pkgname))
                 if type(fs[f]) is dict:
                     if not os.path.exists(cwd):
                         os.makedirs(cwd)
                     buildfs(fs[f], path=cwd)
                 else:
-                    self.touch(fs[f], cwd)
-        if fs:
-            raise NotImplementedError
-        fs = fs or (MINIMAL if minimal else STANDARD)(**self.__dict__)
-        return buildfs(fs=fs, path=self.path)
+                    self.touch(fs[f], path=cwd, **opts)
+        return buildfs(fs=_fs, path=self.path)
 
-    def touch(self, asset, path):
+    def touch(self, contents, path, **options):
         """Touches a file or resource named $fname into existence at
-        location $path and fills it with $asset data as specified"""
-        if asset and not os.path.exists(path):
+        location $path and fill it with $contents data as specified
+
+        params:
+            contents - contents of file to create
+            path - current full path in fs tree
+        """
+        if contents and not os.path.exists(path):
             fname = path.rsplit(os.sep, 1)[-1]
             if fname.endswith(".py"):
-                asset = header(fname, self.desc, self.author,
-                               self.encoding, self.python) + asset
+                _header = header(fname, options['desc'], options['author'],
+                                 options['encoding'], options['python'])
+                contents = _header + contents
             with open(path, 'w') as fout:
-                fout.write(asset)
+                fout.write(contents)
 
     @as_package
     def install_virtualenv(self):
@@ -113,8 +149,8 @@ class Package(object):
         """
         if not self.is_installed('virtualenv'):
             pip.main(['install', 'virtualenv'])
-        venv = os.path.join(self.path,  self.venv)
-        virtualenv.create_environment(venv)
+        venv = os.path.join(self.path, self.venv)
+        virtualenv.create_environment(self.venv)
 
     @as_package
     def as_venv(self, cmd=None):
@@ -179,8 +215,6 @@ class Package(object):
         shell = os.environ["SHELL"]
         subprocess.Popen('mkvirtualenv %s' % named, executable=shell, shell=True,
                          stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        #'workon %s' % named
-        #'source %s/bin/activate' % named
 
     @as_package
     def install(self, dependencies=None):
@@ -192,7 +226,3 @@ class Package(object):
         with open('requirements.txt', 'wb') as f:
             requirements = '\n'.join(self.freeze())
             f.write(requirements)
-
-
-if __name__ == "__main__":
-    pass

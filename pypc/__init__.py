@@ -14,10 +14,15 @@
 """
 
 __title__ = 'pypc'
-__version__ = "0.1.39"
+__version__ = "0.1.40"
 __author__ = [
     "Mek <michael.karpeles@gmail.com>"
 ]
 
-from .pypc import Package
+import sys
+from .create import Package
 from .settings import DEFAULTS
+from .cli import main
+
+if __name__ == '__main__':
+    sys.exit(main())
