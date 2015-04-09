@@ -14,7 +14,7 @@
 """
 
 __title__ = 'pypc'
-__version__ = "0.1.5"
+__version__ = "0.1.50"
 __author__ = [
     "Mek <michael.karpeles@gmail.com>"
 ]
