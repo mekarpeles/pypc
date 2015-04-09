@@ -69,9 +69,6 @@ setup(
     license='LICENSE',
     install_requires=[
         'jinja2',
-        'argparse',
-        'flake8',
-        'pyflakes',
         'virtualenv'
     ],
     classifiers=[
@@ -87,5 +84,8 @@ setup(
         ],
     entry_points={
         'console_scripts': ['pypc=pypc.cli:main'],
+        },
+    extras_require={
+        ':python_version<="2.7"': ['argparse'],
         }
 )
