@@ -24,8 +24,8 @@ def readme(pkgname, desc="", **options):
         pkgname=pkgname, underline=underline, desc=desc
         )
 
-def manifest(**options):
-    return env.get_template('MANIFEST.in').render()
+def manifest(readme, **options):
+    return env.get_template('MANIFEST.in').render(readme=readme)
 
 def setup(pkgname, version="", desc="", url="", author="", email="",
           dependencies=None, classifiers=None, readme="README.rst", **kwargs):
