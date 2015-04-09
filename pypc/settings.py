@@ -81,6 +81,7 @@ MINIMAL = lambda **options: {
     options['readme']: readme(**options),
     'setup.py': setup(**options),
     'setup.cfg': env.get_template('setup.cfg').render(),
+    'MANIFEST.in': manifest(**options),
     '$': { # pkg dir
         '__init__.py': init(**options),
         }
@@ -89,10 +90,8 @@ MINIMAL = lambda **options: {
 STANDARD = lambda **options: {
     'docs': {},
     'examples': {},
-    'AUTHORS': "",
     'CHANGES': changelog(**options),
     'LICENSE': license(**options),
-    'MANIFEST.in': manifest(**options),
     'tox.in': "",
     'tests': {
         "__init__.py": "", #todo
