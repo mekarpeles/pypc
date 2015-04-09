@@ -110,6 +110,6 @@ Join the conversation! Other design considerations and details can be found on t
 
 .. |Build Status| image:: https://travis-ci.org/mekarpeles/pypc.png
 
-.. |Wheel Status| image:: https://pypip.in/wheel/<PYPI_PKG_NAME>/badge.svg
-    :target: https://pypi.python.org/pypi/<PYPI_PKG_NAME>/
+.. |Wheel Status| image:: https://pypip.in/wheel/pypc/badge.svg
+    :target: https://pypi.python.org/pypi/pypc/
     :alt: Wheel Status
