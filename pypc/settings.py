@@ -55,7 +55,7 @@ def init(pkgname, version="", author="", **kwargs):
     usage:
         >>> init("python-mypkg", description="test desc", author="mek")
     """
-    return env.get_template('__init__.py').render(
+    return env.get_template('__init__.html').render(
         title=pkgname, version=version, author=author
         )
 
