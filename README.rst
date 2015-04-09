@@ -2,7 +2,7 @@
 pypc
 ====
 
-|Build Status|
+|Build Status| |Wheel Status|
 
 The Python3 Package Creator.
 
@@ -19,11 +19,11 @@ Installation
 
 Usage
 =====
-How do I create a pip python package? The following will create a
-standard package, as generally described in
-https://packaging.python.org/en/latest/distributing.html. It will also
-setup virtualenv, pip install pyflakes and pep8, and generate a
-requirements.txt.
+Pypc can be used to create the basic structure of your python
+package. It uses the conventions and file structure outlined in
+https://packaging.python.org/en/latest/distributing.html. Options also
+exist to setup virtualenv, pip install dependencies and linters, such
+as pyflakes and pep8, and generate a pip freeze as requirements.txt.
 
     $ pypc project && ls
 
@@ -109,3 +109,7 @@ Discussion
 Join the conversation! Other design considerations and details can be found on the pypa mailing list: https://groups.google.com/forum/#!searchin/pypa-dev/mek/pypa-dev/eaku1xvUVHU/Kbj_17sP23kJ
 
 .. |Build Status| image:: https://travis-ci.org/mekarpeles/pypc.png
+
+.. |Wheel Status| image:: https://pypip.in/wheel/<PYPI_PKG_NAME>/badge.svg
+    :target: https://pypi.python.org/pypi/<PYPI_PKG_NAME>/
+    :alt: Wheel Status
