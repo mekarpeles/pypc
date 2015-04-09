@@ -27,7 +27,7 @@ def argparser():
                         default=getpass.getuser())
     parser.add_argument('--email', dest="email", help="Author's email",
                         default='')
-    parser.add_argument('-V', '--version', dest="version",
+    parser.add_argument('-V', '--ver', dest="version",
                         help="Your package's version: defaults to v0.0.1" \
                             "(use -V for pypc version)",
                         default='0.0.1')

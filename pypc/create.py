@@ -137,7 +137,7 @@ class Package(object):
             fname = path.rsplit(os.sep, 1)[-1]
             if fname.endswith(".py"):
                 _header = header(fname, options['desc'], options['author'],
-                                 options['encoding'], options['python'])
+                                 options['python'], options['encoding'])
                 contents = _header + contents
             with open(path, 'w') as fout:
                 fout.write(contents)

@@ -8,7 +8,7 @@ The Python3 Package Creator.
 
 Pypc generates standard scaffolding and environment for a Python package.
 
-* Creates the directory structure show above in `Usage`
+* Populates the directory structure show in `Usage`
 * Installs virtualenv + creates venv directory
 * Installs pyflakes, pep8 to venv
 
@@ -25,11 +25,7 @@ https://packaging.python.org/en/latest/distributing.html. It will also
 setup virtualenv, pip install pyflakes and pep8, and generate a
 requirements.txt.
 
-    # Standard build
-
-    $ pypc project
-    
-    $ cd project;ls
+    $ pypc project && ls
 
     AUTHORS  CHANGES  docs/  examples/  LICENSE  MANIFEST.in  project/  README.md  requirements.txt  setup.py  tox.in  venv/
 
@@ -39,29 +35,40 @@ only creates a README and setup.py and does not require network access
 
     # Minimal install
 
-    $ pypc -m project
+    $ pypc -m project && ls
 
-    $ cd project;ls
+    project/  README.rst  setup.py setup.cfg
 
-    project/  README.rst  setup.py
+In both cases, a project/ subdirectory is populated with an __init__.py.
 
-In both cases, project/ is populated with a __init__.py.
+Finally, pypc provides a strict mode which installs and configures
+virtualenv and specified linters as dependencies. This may be combined
+with minimal mode:
 
+    $ pypc -sm project
 
 Options
 =======
 
-    usage: pypc [-h] [-v] [-m] [--strict] [--venv VENV] [--path PATH]
-                [--author AUTHOR] [--email EMAIL] [-V VERSION] [--desc DESC]
-                [--url URL] [--rm README] [--fs FS]
+    usage: pypc [-h] [-v] [-m] [-s] [--venv VENV] [--path PATH] [--author AUTHOR]
+                [--email EMAIL] [-V VERSION] [--desc DESC] [--url URL]
+                [--rm README] [--fs FS]
                 pkgname
 
 If you only want to create a package with a setup.py (no virtual env,
 etc), use the -m or --minimal flag.
 
 Note: -v outputs the version of pypc whereas -V or --version is used to
- specify the initial version of the package you are creation. This is
+ specify the initial version of the package you are creating. This is
  slightly confusion, and improvements are welcome.
+
+Library
+=======
+Pypc can be imported and used as library.
+
+    >>> from pypc.create import Package
+    >>> p = Package("pkgname", path="~/optional") # defaults to os.getcwd()
+    >>> p.new(**{}) # see pypc.settings.DEFAULTS for a list of default (key,vals)
 
 Philosopy
 =========

@@ -24,7 +24,7 @@ def find_version(*file_paths):
 setup(
     name='{{ name }}',
     version=find_version("{{ name }}", "__init__.py"),
-    description={{ desc }},
+    description='{{ desc }}',
     long_description=read('{{ readme }}'),
     classifiers=[
         {% for c in classifiers %}'{{ c }}',
