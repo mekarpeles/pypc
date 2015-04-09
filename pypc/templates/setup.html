@@ -40,7 +40,7 @@ setup(
     platforms='any',
     license='LICENSE',
     install_requires=[
-        {% for d, v in dependencies.items() %}'{{ d }}': '{{ v }}',
+        {% for d, v in dependencies.items() %}'{{ d }}>={{ v }}',
         {% endfor %}]
 )
 

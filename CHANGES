@@ -3,6 +3,10 @@ Pypc Changelog
 
 Here you can see the full list of changes between each Pypc release.
 
+Version 0.1.5-dev2
+------------------
+- fixed setup.py -- generated install_requires w/ incorrect format
+
 Version 0.1.5-dev1
 ------------------
 - flake8 compliant
