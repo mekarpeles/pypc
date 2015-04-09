@@ -1,5 +1,2 @@
-include CHANGES
-include LICENSE
-include AUTHORS
 include {{readme}}
 
