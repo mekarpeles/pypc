@@ -1,10 +1,10 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 """
 pypc
 ----
 
-Pypc is a tool for creating Python Packages. 
+Pypc is a tool for creating Python Packages.
 
 Generating a Project
 ````````````````````
@@ -21,7 +21,8 @@ Setup
     $ pip install pypc
     $ pypc helloworld
 
-    AUTHORS CHANGES docs/ examples/ LICENSE MANIFEST.in project/ README.md requirements.txt setup.py tox.in venv/
+    AUTHORS CHANGES docs/ examples/ LICENSE MANIFEST.in project/
+    README.md requirements.txt setup.py tox.in venv/
 
 Links
 `````
@@ -37,12 +38,14 @@ from setuptools import setup
 
 here = os.path.abspath(os.path.dirname(__file__))
 
+
 def read(*parts):
     """Taken from pypa pip setup.py:
     intentionally *not* adding an encoding option to open, See:
-       https://github.com/pypa/virtualenv/issues/201#issuecomment-3145690
+    https://github.com/pypa/virtualenv/issues/201#issuecomment-3145690
     """
     return codecs.open(os.path.join(here, *parts), 'r').read()
+
 
 def find_version(*file_paths):
     version_file = read(*file_paths)
