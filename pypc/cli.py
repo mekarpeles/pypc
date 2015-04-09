@@ -14,11 +14,12 @@ def argparser():
     parser.add_argument('-v', help="Displays the pypc version",
                         action="version", version="%s v%s" \
                             % (__title__, __version__))
-    parser.add_argument('-m', '--minimal', help="Minimal mode, setup.py only",
+    parser.add_argument('-m', '--minimal', dest="minimal",
+                        help="Minimal mode, setup.py only",
                         action="store_true")
-    parser.add_argument('--strict', dest="strict", help="Install linters",
+    parser.add_argument('-s', '--strict', dest="strict", help="Install linters, virtualenv",
                         action="store_true")
-    parser.add_argument('--venv', dest="venv", help="Configure virtualenv",
+    parser.add_argument('--venv', dest="venv", help="Virtualenv dirname",
                         default='venv')
     parser.add_argument(dest="pkgname", help="Desired package name")
     parser.add_argument('--path', dest="path", help="Path to package directory")
@@ -49,6 +50,7 @@ def optparser(args):
     """
     return {
         'venv': args.venv,
+        'minimal': args.minimal,
         'strict': args.strict,
         'pkgname' : args.pkgname,
         'author': args.author,

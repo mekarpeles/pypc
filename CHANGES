@@ -29,6 +29,9 @@ Version 0.1.3
 -- py2.7.9 may require pyopenssl ndg-httpsclient pyasn1
 -- added --strict flag to setup virtualenv + pip install deps
 -- added --venv flag to specify venv directory
+- 0.1.41
+-- fixing setup.py typo
+-- adding 'minimal' to options dict
 
 Version 0.1.2
 -------------

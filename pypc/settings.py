@@ -42,7 +42,7 @@ def changelog(version, **kwargs):
         version=version, date=datetime.datetime.now().ctime()
         )
 
-def init(pkgname, version="", desc="", author="", **kwargs):
+def init(pkgname, version="", author="", **kwargs):
     """
     Generates a main __init__.py for the project w/ __version__, etc.
 
@@ -50,7 +50,7 @@ def init(pkgname, version="", desc="", author="", **kwargs):
         >>> init("python-mypkg", description="test desc", author="mek")
     """
     return env.get_template('__init__.py').render(
-        title=pkgname, desc=desc, version=version, author=author
+        title=pkgname, version=version, author=author
         )
 
 def header(name, desc, author, python, encoding):

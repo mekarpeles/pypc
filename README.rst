@@ -51,15 +51,15 @@ In both cases, project/ is populated with a __init__.py.
 Options
 =======
 
-    usage: pypc [-h] [-m] [-V] [--author AUTHOR] [--email EMAIL]
-                [--version VERSION] [--desc DESC] [--url URL] [--rm README]
-                [--fs FS]
-                path
+    usage: pypc [-h] [-v] [-m] [--strict] [--venv VENV] [--path PATH]
+                [--author AUTHOR] [--email EMAIL] [-V VERSION] [--desc DESC]
+                [--url URL] [--rm README] [--fs FS]
+                pkgname
 
 If you only want to create a package with a setup.py (no virtual env,
 etc), use the -m or --minimal flag.
 
-Note: -V outputs the version of pypc whereas --version is used to
+Note: -v outputs the version of pypc whereas -V or --version is used to
  specify the initial version of the package you are creation. This is
  slightly confusion, and improvements are welcome.
 
