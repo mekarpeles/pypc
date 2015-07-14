@@ -1,0 +1,21 @@
+
+import argparse
+import getpass
+from . import __title__, __version__, {{ name }}
+
+def argparser():
+    """Creates a command line ArgumentParser for {{ name }}."""
+    parser = argparse.ArgumentParser(description=__title__)
+    parser.add_argument('-v', help="Displays the {{ name }} version",
+                        action="version", version="%s v%s"
+                        % (__title__, __version__))
+    return parser
+
+
+def main():
+    parser = argparser()
+    args = parser.parse_args()
+
+
+if __name__ == "__main__":
+    main()

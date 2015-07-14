@@ -33,6 +33,10 @@ setup(
         {% endfor %}],
     author='{{ author }}',
     author_email='{{ email }}',
+    {% if cli %}
+    entry_points={
+        'console_scripts': ['{{ name }}={{ name }}.{{ cli }}:main'],
+        },{% endif %}
     url='{{ url }}',
     packages=[
         '{{ name }}'

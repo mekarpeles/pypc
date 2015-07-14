@@ -9,6 +9,7 @@
     :license: see LICENSE for more details.
 """
 
+import sys
 import datetime
 import textwrap
 from jinja2 import Environment, PackageLoader
@@ -32,11 +33,12 @@ def manifest(readme, **options):
 
 
 def setup(pkgname, version="", desc="", url="", author="", email="",
-          dependencies=None, classifiers=None, readme="README.rst", **kwargs):
+          dependencies=None, classifiers=None, readme="README.rst",
+          cli=None, **kwargs):
     """Generates a project's setup.py"""
     return env.get_template('setup.html').render(
         name=pkgname, version=version, url=url, author=author, email=email,
-        desc=desc, readme=readme, dependencies=dependencies,
+        desc=desc, readme=readme, dependencies=dependencies, cli=cli,
         classifiers=classifiers
         )
 
@@ -46,6 +48,10 @@ def changelog(version, **kwargs):
     return env.get_template('CHANGES').render(
         version=version, date=datetime.datetime.now().ctime()
         )
+
+
+def cli(pkgname, **kwargs):
+    return env.get_template('cli.html').render(name=pkgname)
 
 
 def init(pkgname, version="", author="", **kwargs):
@@ -84,7 +90,14 @@ def setup_fs(minimal=False, **options):
     fs = MINIMAL(**options)
     if not minimal:
         fs.update(STANDARD(**options))
+
+    # Inject cli script into fs
+    if options.get('cli'):
+        fs['$'][options.get('cli')] = {
+            "%s.py" % options.get('cli'): cli(**options)
+            }
     return fs
+
 
 MINIMAL = lambda **options: {
     options['readme']: readme(**options),
@@ -103,7 +116,7 @@ STANDARD = lambda **options: {
     'LICENSE': license(**options),
     'tox.in': "",
     'tests': {
-        "__init__.py": "",
+        "__init__.py": init(**options),
         }
     }
 
@@ -111,7 +124,8 @@ DEFAULTS = {
     'readme': 'README.rst',
     'pkgname': 'python-mypkg',
     'version': '0.0.1',
-    'python': '3.4',
+    'python': "%s.%s" % (sys.version_info.major,
+                         sys.version_info.minor),
     'encoding': 'utf-8',
     'desc': '',
     'author': 'Anonymous',
@@ -123,5 +137,6 @@ DEFAULTS = {
         'pyflakes': '0.8.1'
         },
     'classifiers': [],
-    'venv': 'venv'
+    'venv': 'venv',
+    'cli': None
     }

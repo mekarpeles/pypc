@@ -23,6 +23,8 @@ def argparser():
     parser.add_argument('-s', '--strict', dest="strict",
                         help="Install linters, virtualenv",
                         action="store_true")
+    parser.add_argument('--cli', dest="cli", help="Create cli script",
+                        default=None)
     parser.add_argument('--venv', dest="venv", help="Virtualenv dirname",
                         default='venv')
     parser.add_argument(dest="pkgname", help="Desired package name")
@@ -51,6 +53,7 @@ def optparser(args):
     provides to the ArgumentParser. Used in Package.new() and for
     """
     return {
+        'cli': args.cli,
         'venv': args.venv,
         'minimal': args.minimal,
         'strict': args.strict,

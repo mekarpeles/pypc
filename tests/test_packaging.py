@@ -7,8 +7,8 @@
 
     This module tests the pypc packaging pipeline
 
-    :copyright: (c) 2014 by Hackerlist.
-    :license: BSD, see LICENSE for more details.
+    :copyright: (c) 2015 by Mek.
+    :license: see LICENSE for more details.
 """
 
 import sys
