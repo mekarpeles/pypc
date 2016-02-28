@@ -6,11 +6,12 @@ pypc
 
 The Python3 Package Creator.
 
-Pypc generates standard scaffolding and environment for a Python package.
+Pypc is a standard project generator for Python packages.
 
-* Populates the directory structure show in `Usage`
-* --strict Installs virtualenv + creates venv directory
-* Installs pyflakes, pep8 to venv
+How it Works
+============
+
+Pypc is similar to yoeman in that it is a tool for generating project scaffolding. The pypc project aspires to integrate with the Python Packaging Authority `pip` tool to provide users with a standard, sane approach to creating python packages (via a command such as `pip create <package>`. Currently, pypc works similarly to git and will populate your current directory with the appropriate project files.
 
 Installation
 ============
@@ -19,17 +20,22 @@ Installation
 
 Usage
 =====
-Pypc can be used to create the basic structure of your python
+
+Pypc helps you create the basic structure of your python
 package. It uses the conventions and file structure outlined in
-https://packaging.python.org/en/latest/distributing.html. Options also
-exist to setup virtualenv, pip install dependencies and linters, such
-as pyflakes and pep8, and generate a pip freeze as requirements.txt.
+https://packaging.python.org/en/latest/distributing.html. Advanced options
+exist for additionally automatically setting up virtualenv for your project,
+pip install dependencies and linters, such as pyflakes and pep8, auto-generating
+a pip freeze as requirements.txt, and creating command line entry points for your package.
+
+The most basic example is `pypc <package-name>` which will populate your current working directory with
+the correct project files. E.g:
 
     $ pypc project && ls
-
+    
     CHANGES  docs/  examples/  LICENSE  MANIFEST.in  project/  README.md  setup.py  tox.in
 
-Alternatively, you can run in minimal mode with -m or --minimal. This
+Pypc also offers a -m or --minimal flag for purists who wish to generate only the minimal requirements. This
 only creates a README and setup.py and does not require network access
 (after pypc is installed).
 
@@ -41,8 +47,9 @@ only creates a README and setup.py and does not require network access
 
 In both cases, a project/ subdirectory is populated with an __init__.py.
 
-Finally, pypc provides a strict mode which installs and configures
-virtualenv and specified linters as dependencies. This may be combined
+Finally, pypc provides a --strict or -s mode which not only scaffolds your
+project directory but additionally installs and activates
+virtualenv and linters within your environment. Strict mode may be combined
 with minimal mode:
 
     $ pypc -sm project
